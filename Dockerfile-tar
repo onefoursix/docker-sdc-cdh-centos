@@ -136,7 +136,6 @@ USER ${SDC_USER}
 EXPOSE 18630
 COPY scripts/docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
-RUN "/opt/streamsets-datacollector-3.1.0.0/bin stagelibs -install=streamsets-datacollector-jdbc-lib"
 CMD ["dc", "-exec"]
 
 
