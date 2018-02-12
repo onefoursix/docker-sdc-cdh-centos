@@ -25,12 +25,13 @@ LABEL maintainer="Mark Brooks <mark@streamsets.com>"
 
 
 ######################################
-## SDC version download location
+## SDC version and download locations
 ######################################
 ENV SDC_VERSION=3.1.0.0
-ENV SDC_BASE_URL=http://nightly.streamsets.com.s3-us-west-2.amazonaws.com/datacollector/3.1/3.1.0.0/tarball
+ENV SDC_BASE_URL=http://nightly.streamsets.com.s3-us-west-2.amazonaws.com/datacollector/3.1/3.1.0.0/tarball/
 ENV SDC_CORE=streamsets-datacollector-core-3.1.0.0.tgz
-ENV SDC_URL=${SDC_BASE_URL}/${SDC_CORE}
+ENV SDC_URL=${SDC_BASE_URL}${SDC_CORE}
+ENV SDC_CDH_514_STAGE_LIB_TGZ=streamsets-datacollector-cdh_5_14-lib-3.1.0.0.tgz
 
 
 
@@ -81,6 +82,7 @@ ENV SDC_CONF=/etc/sdc \
     SDC_LOG=/logs \
     SDC_RESOURCES=/resources \
     USER_LIBRARIES_DIR=/sdc-user-libs \
+    STAGE_LIBRARIES_DIR="${SDC_DIST}/streamsets-libs" \
     STREAMSETS_LIBRARIES_EXTRA_DIR="${SDC_DIST}/streamsets-libs-extras"
 
 
@@ -94,12 +96,11 @@ RUN /sdc-configure.sh && rm /sdc-configure.sh
 ######################################
 ## Install the SDC CDH 5.14 stage lib
 ######################################
-ENV SDC_CDH_514_STAGE_LIB=streamsets-datacollector-cdh_5_14-lib-3.1.0.0.tgz
 ENV WORKDIR=/tmp
-RUN wget ${SDC_BASE_URL}/${SDC_CDH_514_STAGE_LIB} \
- && tar -xvf ${SDC_CDH_514_STAGE_LIB} \
- && mv streamsets-datacollector-3.1.0.0/streamsets-libs/${SDC_CDH_514_STAGE_LIB} streamsets-datacollector-3.1.0.0/streamsets-libs/ \
- && rm -rf streamsets-datacollector-3.1.0.0/streamsets-libs/
+RUN wget ${SDC_BASE_URL}${SDC_CDH_514_STAGE_LIB_TGZ} \
+ && tar -xvf ${SDC_CDH_514_STAGE_LIB_TGZ} \
+ && mv streamsets*/streamsets-libs/* ${STAGE_LIBRARIES_DIR}
+ && rm -rf streamsets*
 
 
 
@@ -118,6 +119,7 @@ COPY resources/hive-conf/* /etc/hive/conf/
 ######################################
 COPY resources/yarn-conf ${SDC_RESOURCES}/hadoop-conf
 COPY resources/hive-conf ${SDC_RESOURCES}/hive-conf
+
 
 
 
