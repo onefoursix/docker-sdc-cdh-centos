@@ -65,7 +65,7 @@ persist across container restarts and upgrades
 	$ docker create \
 	 -v /etc/sdc \
 	 -v /data \
-	 -v $SDC_DIST/streamsets-libs \
+	 -v /opt/streamsets-datacollector-$SDC_VERSION/streamsets-libs \
 	 -v /resources \
 	 -v /opt/streamsets-datacollector-user-libs \
 	 -v $SDC_DIST/streamsets-libs-extras \

@@ -64,8 +64,16 @@ ARG SDC_UID=20159
 
 
 ######################################
-## The paths below should generally be attached to a VOLUME for persistence.
-## See the project's README.md for example use of VOLUMEs
+## SDC paths
+######################################
+ENV SDC_DIST="/opt/streamsets-datacollector-${SDC_VERSION}"
+ENV STAGE_LIBRARIES_DIR="${SDC_DIST}/streamsets-libs" 
+
+######################################
+## The paths below are only needed when running outside of StreamSets Control Hub
+## and persistence is needed.
+##
+## See the README for additional detail 
 ##
 ## SDC_CONF is where configuration files are stored. This can be shared.
 ## SDC_DATA is a volume for storing collector state. Do not share this between containers.
@@ -74,7 +82,6 @@ ARG SDC_UID=20159
 ## STREAMSETS_LIBRARIES_EXTRA_DIR is where extra libraries such as JDBC drivers should go.
 ## USER_LIBRARIES_DIR is where custom stage libraries are installed.
 ######################################
-ENV SDC_DIST="/opt/streamsets-datacollector-${SDC_VERSION}"
 ENV SDC_CONF=/etc/sdc \
     SDC_DATA=/data \
     SDC_LOG=/logs \
