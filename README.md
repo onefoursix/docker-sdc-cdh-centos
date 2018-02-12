@@ -56,7 +56,7 @@ Run the container with the following command which exposes the SDC port:
  If this Docker image is used without SCH, state can be maintained using a data container
  for persistence and by using these commands to create and to run the container:
  
- ## Create a data container 
+ ## Create a data container (only needed when running outside of SCH)
 
 This command creates a Docker data container named "sdc-volumes" 
 with multiple data volumes so that important SDC data and configs 
@@ -76,7 +76,7 @@ persist across container restarts and upgrades
 
 
 
-## Run the container
+## Run the container (only when running outside of SCH)
 Run the container with the following command which references the data container and 
 exposes the SDC port:
 
