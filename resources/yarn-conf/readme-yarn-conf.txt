@@ -1,1 +1,1 @@
-place all the files from the Cloudera yarn-client-config in this directory
+place all the Cloudera yarn-client-config files in this directory
