@@ -5,6 +5,8 @@ Collector (SDC) preconfigured with the CDH 5.14 stage lib and Cloudera's hadoop-
 
 Info on StreamSets Data Collector is [here](https://streamsets.com/products/sdc)
 
+Connecting to a Kerberized cluster is not yet supported in this image
+
 ## Required Resources
 
 In order to connect to a specific Cloudera cluster, copy the Cloudera client config files 
