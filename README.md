@@ -49,6 +49,7 @@ Run the container with the following command which exposes the SDC port:
  This Docker image is stateless and is intended to be used with StreamSets Control Hub (SCH)
  
  When used with SCH and launched using [SCH's Kubernetes Support](https://streamsets.com/blog/streamsets-control-hub-kubernetes/) 
+ SCH manages all persistence for the SDC container
  
  Info on StreamSets Control Hub is [here](https://streamsets.com/products/sch)
  
