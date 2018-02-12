@@ -15,7 +15,7 @@
 
 ######################################
 ## Dockerfile to build a standalone instance of SDC pre-configured 
-## with the Cloudera's hadoop-client libs
+## with the CDH 5.14 stage lib and Cloudera's hadoop-client libs
 ##
 ## This project borrowed heavily from the project here (thanks Adam!):
 ## https://github.com/streamsets/datacollector-docker
@@ -30,9 +30,8 @@ LABEL maintainer="Mark Brooks <mark@streamsets.com>"
 ENV SDC_VERSION=3.1.0.0
 ENV SDC_BASE_URL=http://nightly.streamsets.com.s3-us-west-2.amazonaws.com/datacollector/3.1/3.1.0.0/tarball/
 ENV SDC_CORE=streamsets-datacollector-core-3.1.0.0.tgz
-ENV SDC_URL=${SDC_BASE_URL}${SDC_CORE}
 ENV SDC_CDH_514_STAGE_LIB_TGZ=streamsets-datacollector-cdh_5_14-lib-3.1.0.0.tgz
-
+ENV SDC_URL=${SDC_BASE_URL}${SDC_CORE}
 
 
 ######################################
@@ -51,7 +50,6 @@ RUN  yum -y update && yum -y install \
 ######################################  
 COPY resources/cdh.repo /etc/yum.repos.d/
 RUN yum -y update && yum -y install hadoop-client
-
 
 
 
@@ -99,7 +97,7 @@ RUN /sdc-configure.sh && rm /sdc-configure.sh
 ENV WORKDIR=/tmp
 RUN wget ${SDC_BASE_URL}${SDC_CDH_514_STAGE_LIB_TGZ} \
  && tar -xvf ${SDC_CDH_514_STAGE_LIB_TGZ} \
- && mv streamsets*/streamsets-libs/* ${STAGE_LIBRARIES_DIR}
+ && mv streamsets*/streamsets-libs/* ${STAGE_LIBRARIES_DIR} \
  && rm -rf streamsets*
 
 
@@ -112,6 +110,7 @@ RUN rm -rf /etc/hadoop/conf && mkdir -p /etc/hadoop/conf
 RUN rm -rf /etc/hive/conf && mkdir -p /etc/hive/conf
 COPY resources/yarn-conf/* /etc/hadoop/conf/
 COPY resources/hive-conf/* /etc/hive/conf/
+
 
 
 ######################################
