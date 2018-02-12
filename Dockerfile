@@ -69,6 +69,8 @@ ARG SDC_UID=20159
 ENV SDC_DIST="/opt/streamsets-datacollector-${SDC_VERSION}"
 ENV STAGE_LIBRARIES_DIR="${SDC_DIST}/streamsets-libs" 
 
+
+
 ######################################
 ## The paths below are only needed when running outside of StreamSets Control Hub
 ## and persistence is needed.
@@ -89,6 +91,7 @@ ENV SDC_CONF=/etc/sdc \
     USER_LIBRARIES_DIR=/sdc-user-libs \
     STAGE_LIBRARIES_DIR="${SDC_DIST}/streamsets-libs" \
     STREAMSETS_LIBRARIES_EXTRA_DIR="${SDC_DIST}/streamsets-libs-extras"
+
 
 
 ######################################
@@ -115,7 +118,7 @@ RUN wget ${SDC_BASE_URL}${SDC_CDH_514_STAGE_LIB_TGZ} \
 ######################################
 RUN rm -rf /etc/hadoop/conf && mkdir -p /etc/hadoop/conf
 RUN rm -rf /etc/hive/conf && mkdir -p /etc/hive/conf
-COPY resources/yarn-conf/* /etc/hadoop/conf/
+COPY resources/hadoop-conf/* /etc/hadoop/conf/
 COPY resources/hive-conf/* /etc/hive/conf/
 
 
@@ -123,7 +126,7 @@ COPY resources/hive-conf/* /etc/hive/conf/
 ######################################
 ## Load the CDH Hadoop configs into SDC Resources
 ######################################
-COPY resources/yarn-conf ${SDC_RESOURCES}/hadoop-conf
+COPY resources/hadoop-conf ${SDC_RESOURCES}/hadoop-conf
 COPY resources/hive-conf ${SDC_RESOURCES}/hive-conf
 
 
@@ -136,7 +139,6 @@ USER ${SDC_USER}
 EXPOSE 18630
 COPY scripts/docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
-RUN "/opt/streamsets-datacollector-3.1.0.0/bin stagelibs -install=streamsets-datacollector-jdbc-lib"
 CMD ["dc", "-exec"]
 
 
