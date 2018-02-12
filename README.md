@@ -44,8 +44,9 @@ Run the container with the following command which exposes the SDC port:
  ## Connect to SDC
  Connect to SDC at `http://<docker-host>:18630`
  
- ## Note regarding persistence:  This Docker image is stateless and is intended to be used
- with StreamSets Control Hub (SCH) 
+ ## Note regarding persistence
+ 
+ This Docker image is stateless and is intended to be used with StreamSets Control Hub (SCH) 
  
  Info on StreamSets Control Hub is [here](https://streamsets.com/products/sch)
  
