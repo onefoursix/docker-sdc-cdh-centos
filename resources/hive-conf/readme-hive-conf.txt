@@ -1,0 +1,1 @@
+place all the files from the Cloudera hive-client-config in this directory
